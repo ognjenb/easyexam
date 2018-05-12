@@ -9,12 +9,10 @@ socket.addEventListener('open', function (event) {
 socket.addEventListener('message', function (event) {
   var obj = JSON.parse(event.data);
   let mainDiv = document.getElementById('main');
-  appendTextDiv(mainDiv,obj.question);
-  obj.answers.forEach((answers) => appendTextDiv(mainDiv, answers.answer));
+  mainDiv.innerHTML = getAnswerHTML(obj.question);
+  mainDiv.innerHTML += obj.answers.map((answers) => getAnswerHTML(answers.answer)).join('');
 });
 
-function appendTextDiv(parent,text){
-  var div = document.createElement('div');
-  div.innerHTML=text;
-  parent.appendChild(div);
+function getAnswerHTML(text){
+  return `<div  style="width:fit-content" class="list-group-item list-group-item-primary">${text}</div>`;
 }
